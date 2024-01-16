@@ -16,11 +16,10 @@ public class JwtProvider {
     private String SECRET_KEY;
     private Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
     public String generateToken(UserPrincipal userPrincipal){
-        String token = Jwts.builder().setSubject(userPrincipal.getUsername())
+        return Jwts.builder().setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date()).
                 setExpiration(new Date(new Date().getTime() + EXPIRED)).
-                signWith(SignatureAlgorithm.ES512,SECRET_KEY).compact();
-        return token;
+                signWith(SignatureAlgorithm.HS256,SECRET_KEY).compact();
     }
 
     public Boolean validate(String token){
